@@ -7,6 +7,9 @@ import sys
 {%- if cookiecutter.command_line_interface|lower == 'click' %}
 import click
 {%- endif %}
+{%- if cookiecutter.command_line_interface|lower == 'typer' %}
+import typer
+{%- endif %}
 
 {% if cookiecutter.command_line_interface|lower == 'click' %}
 @click.command()
@@ -30,6 +33,22 @@ def main():
     return 0
 {%- endif %}
 
+{%- if cookiecutter.command_line_interface|lower == 'typer' %}
+app = typer.Typer()
+
+@app.command()
+def main(
+    name: str = typer.Argument(..., help="Your name"),
+    age: int = typer.Option(18, help="Your age"),
+    is_cool: bool = typer.Option(False, help="Are you cool?"),
+):
+    """Console script for {{cookiecutter.project_slug}}."""
+    typer.echo(f"Hello {name}, you are {age} years old and cool: {is_cool}")
+{%- endif %}
 
 if __name__ == "__main__":
+    {%- if cookiecutter.command_line_interface|lower == 'typer' %}
+    app()
+    {%- else %}
     sys.exit(main())  # pragma: no cover
+    {%- endif %}

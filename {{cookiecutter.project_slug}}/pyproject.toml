@@ -1,0 +1,46 @@
+[tool.yapf]
+based_on_style = "google"
+
+[tool.poetry]
+name = "{{cookiecutter.project_slug}}"
+version = "{{cookiecutter.version}}"
+description = ""
+authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
+license = "{{cookiecutter.open_source_license}}"
+{%- if cookiecutter.create_readme_file == "y" %}
+readme = "README.md"
+{%- endif %}
+packages = [{include = "{{cookiecutter.project_slug}}"}]
+{%- if cookiecutter.use_pdoc == "y" %}
+include = ["{{cookiecutter.project_slug}}/docs"]
+{%- endif %}
+
+[tool.poetry.dependencies]
+python = "^3.8.1,<3.11"
+{%- if cookiecutter.command_line_interface == "Click" %}
+click = "^8.0.3"
+{%- endif %}
+{%- if cookiecutter.command_line_interface == "Typer" %}
+typer = "^0.4.0"
+{%- endif %}
+
+[tool.poetry.group.dev.dependencies]
+nox = "^2022.11.21"
+{%- if cookiecutter.use_pytest == "y" %}
+pytest = "^7.2.1"
+{%- endif %}
+{%- if cookiecutter.use_coverage == "y" %}
+coverage = "^7.2.1"
+{%- endif %}
+{%- if cookiecutter.use_lint == "y" %}
+yapf = "^0.32.0"
+flake8 = "^6.0.0"
+{%- endif %}
+{%- if cookiecutter.use_pdoc == "y" %}
+pdoc = "^13.0.0"
+{%- endif %}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
