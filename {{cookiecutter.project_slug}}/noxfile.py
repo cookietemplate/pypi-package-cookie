@@ -6,7 +6,7 @@ import nox
 def tests(session):
     session.install('pytest', 'pytest-cov', 'poetry')
     session.run('poetry', 'install')
-    session.run('pytest', '--cov=package_name', '--cov-report=term-missing', '--cov-report=html')
+    session.run('pytest', '--cov={{cookiecutter.project_slug}}', '--cov-report=term-missing', '--cov-report=html')
     session.notify('coverage')
 
 
