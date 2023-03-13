@@ -35,6 +35,7 @@ pytest = "^7.2.1"
 {%- endif %}
 {%- if cookiecutter.use_coverage == "y" %}
 coverage = "^7.2.1"
+pytest-cov = "^4.0.0"
 {%- endif %}
 {%- if cookiecutter.use_lint == "y" %}
 yapf = "^0.32.0"
@@ -46,7 +47,6 @@ pdoc = "^13.0.0"
 pre-commit = "^3.1.1"
 isort = "^5.12.0"
 mypy = "^1.1.1"
-
 
 [build-system]
 requires = ["poetry-core"]

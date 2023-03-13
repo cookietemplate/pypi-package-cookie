@@ -4,9 +4,9 @@ import nox
 {%- if cookiecutter.use_pytest == 'y' %}
 @nox.session
 def tests(session):
-    session.install('pytest', 'pytest-cov', 'poetry')
+    session.install('poetry')
     session.run('poetry', 'install')
-    session.run('pytest', '--cov={{cookiecutter.project_slug}}', '--cov-report=term-missing', '--cov-report=html')
+    session.run('poetry', 'run', 'pytest', '--cov={{cookiecutter.project_slug}}', '--cov-report=term-missing', '--cov-report=html')
     session.notify('coverage')
 
 
@@ -32,6 +32,7 @@ def lint(session):
 {%- if cookiecutter.use_pdoc == 'y' %}
 @nox.session
 def build_docs(session):
-    session.install('pdoc')
-    session.run('pdoc', '--html', '--output-dir', 'docs', '-d', 'google', '{{cookiecutter.project_slug}}')
+    session.install('poetry', 'pdoc')
+    session.run('poetry', 'install')
+    session.run('poetry', 'run', 'pdoc', '--output-dir', 'docs', '-d', 'google', '{{cookiecutter.project_slug}}')
 {%- endif %}
