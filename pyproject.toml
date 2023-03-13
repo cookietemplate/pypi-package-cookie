@@ -21,6 +21,8 @@ yapf = "^0.32.0"
 flake8 = "^6.0.0"
 coverage = "^7.2.1"
 pre-commit = "^3.1.1"
+isort = "^5.12.0"
+mypy = "^1.1.1"
 
 [build-system]
 requires = ["poetry-core"]
