@@ -26,7 +26,6 @@
     ],
     "create_readme_file": "y",
     "pypi_username": "{{ cookiecutter.github_username }}",
-    "build_extensions": "n",
     "use_pytest": "y",
     "use_coverage": "y",
     "coverage_threshold": 75,

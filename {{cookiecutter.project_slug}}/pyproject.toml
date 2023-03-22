@@ -15,9 +15,6 @@ packages = [{include = "{{cookiecutter.project_slug}}"}]
 {%- if cookiecutter.use_pdoc == "y" %}
 include = ["{{cookiecutter.project_slug}}/docs"]
 {%- endif %}
-{%- if cookiecutter.build_py == "y" %}
-build = "{{cookiecutter.build_py}}"
-{%- endif %}
 
 [tool.poetry.dependencies]
 python = "^3.8.1,<3.11"
