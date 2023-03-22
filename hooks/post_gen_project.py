@@ -85,6 +85,3 @@ if __name__ == '__main__':
     if COMMAND_PACKAGE_DICT['{{ cookiecutter.command_line_interface }}'] is None:
         remove_file('cli.py')
 
-    if '{{ cookiecutter.build_extensions }}' == "n":
-        remove_file('build.py')
-
