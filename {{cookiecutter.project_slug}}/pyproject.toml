@@ -5,7 +5,7 @@ description = "{{cookiecutter.project_short_description}}"
 authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
 license = "{{cookiecutter.open_source_license}}"
 readme = "README.md"
-include = ["{{cookiecutter.project_slug}}/docs"]
+include = ["docs"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -79,7 +79,7 @@ unfixable = [
 ]
 
 [tool.ruff.isort]
-known-first-party = ["pdm_template"]  # FIXME: To your Package Name
+known-first-party = ["{{cookiecutter.project_slug}}"]
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
