@@ -71,17 +71,19 @@ def write_license_file(license_name):
         with open(os.path.join(PROJECT_DIRECTORY, 'LICENSE'), 'w') as f:
             f.write(license_content)
 
+def init_git_repo():
+    """Initialize the git repository"""
+    os.system("git init")
+    os.system("git add .")
+    os.system("git commit -m 'Initial commit'")
 
-def remove_file(filepath):
-    os.remove(os.path.join(PROJECT_DIRECTORY, filepath))
-
+def init_poetry():
+    """Initialize the poetry"""
+    os.system("poetry install")
 
 if __name__ == '__main__':
-    write_license_file("{{ cookiecutter.open_source_license }}")
+    if "{{ cookiecutter.open_source_license }}" != "Proprietary":
+        write_license_file("{{ cookiecutter.open_source_license }}")
 
-    if '{{ cookiecutter.create_readme_file }}' != 'y':
-        remove_file('README.md')
-
-    if COMMAND_PACKAGE_DICT['{{ cookiecutter.command_line_interface }}'] is None:
-        remove_file('cli.py')
-
+    init_git_repo()
+    init_poetry()

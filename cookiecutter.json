@@ -1,7 +1,6 @@
 {
     "project_name": "Untitled Project",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-
     "full_name": "Minato",
     "email": "82735346+minato-ellie@users.noreply.github.com",
     "github_username": "minato-ellie",
@@ -23,18 +22,5 @@
         "LGPL-3.0-only",
         "LGPL-3.0-or-later",
         "ISC"
-    ],
-    "create_readme_file": "y",
-    "pypi_username": "{{ cookiecutter.github_username }}",
-    "use_pytest": "y",
-    "use_coverage": "y",
-    "coverage_threshold": 75,
-    "use_lint": "y",
-    "use_pdoc": "y",
-    "command_line_interface": [
-        "Click",
-        "Typer",
-        "Argparse",
-        "No command-line interface"
     ]
 }
