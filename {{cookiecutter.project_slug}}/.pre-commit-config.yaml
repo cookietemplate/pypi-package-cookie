@@ -1,27 +1,47 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
     hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-    -   id: check-added-large-files
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: requirements-txt-fixer
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: mixed-line-ending
+        exclude: ^(poetry\.lock|requirements\.txt)$
+        args: [ "--fix=lf" ]
 
--   repo: local
+  - repo: https://github.com/python-poetry/poetry
+    rev: '1.7.1'  # add version here
     hooks:
-    -   id: style
+      - id: poetry-check
+      - id: poetry-lock
+      - id: poetry-export
+      - id: poetry-install
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: master
+    hooks:
+      - id: commitizen
+      - id: commitizen-branch
+        stages: [ push ]
+
+  - repo: local
+    hooks:
+      - id: style
         name: Format code style
         entry: poetry run nox -t style -- --
         language: system
-        types: [python]
+        types: [ python ]
         files: \.py$
 
-    -   id: tests
+      - id: tests
         name: Run tests
-        entry: poetry run nox -t coverage
+        entry: poetry run nox -t test
         pass_filenames: false
         language: system
-        types: [python]
+        types: [ python ]
         files: \.py$

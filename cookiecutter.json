@@ -1,14 +1,13 @@
 {
     "project_name": "Untitled Project",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-    "full_name": "Minato",
-    "email": "82735346+minato-ellie@users.noreply.github.com",
-    "github_username": "minato-ellie",
+    "author_name": "",
+    "author_email": "",
     "version": "0.1.0",
     "project_short_description": "",
     "open_source_license": [
+        "Proprietary(Not Open Source)",
         "Apache-2.0",
-        "Proprietary",
         "MIT",
         "BSD-2-Clause",
         "BSD-3-Clause",

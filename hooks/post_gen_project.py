@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 import json
 import os
+import shutil
+import subprocess
+
+from pathlib import Path
 
 import requests
 
@@ -22,16 +26,10 @@ LICENSES_DICT = {
     "ISC": "ISC",
 }
 
-
-COMMAND_PACKAGE_DICT = {
-    "Click": "click",
-    "Typer": "typer",
-    "Argparse": "argparse",
-    "No command-line interface": None
-}
-
-
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
+
+username = '{{ cookiecutter.author_name }}' if '{{ cookiecutter.author_name }}' else os.popen('git config user.name').read().strip()
+email = '{{ cookiecutter.author_email }}' if '{{ cookiecutter.author_email }}' else os.popen('git config user.email').read().strip()
 
 
 def download_license_from_github(license_name):
@@ -49,13 +47,13 @@ def download_license_from_github(license_name):
 def format_license(license_content):
     """Format the license file"""
     license_content = license_content.replace("[year]", "{% now 'local', '%Y' %}")
-    license_content = license_content.replace("[fullname]", "{{ cookiecutter.full_name }}")
-    license_content = license_content.replace("[email]", "{{ cookiecutter.email }}")
+    license_content = license_content.replace("[fullname]", username)
+    license_content = license_content.replace("[email]", email)
     license_content = license_content.replace("[project]", "{{ cookiecutter.project_name }}")
 
     # GPL 3-Clause License
     license_content = license_content.replace("<year>", "{% now 'local', '%Y' %}")
-    license_content = license_content.replace("<name of author>", "{{ cookiecutter.full_name }}")
+    license_content = license_content.replace("<name of author>", username)
     license_content = license_content.replace(
         "<one line to give the program's name and a brief idea of what it does.>",
         "{{ cookiecutter.project_short_description }}"
@@ -71,19 +69,36 @@ def write_license_file(license_name):
         with open(os.path.join(PROJECT_DIRECTORY, 'LICENSE'), 'w') as f:
             f.write(license_content)
 
-def init_git_repo():
-    """Initialize the git repository"""
-    os.system("git init")
-    os.system("git add .")
-    os.system("git commit -m 'Initial commit'")
 
-def init_poetry():
-    """Initialize the poetry"""
-    os.system("poetry install")
+def remove_file(filepath):
+    os.remove(os.path.join(PROJECT_DIRECTORY, filepath))
+
+
+def poetry_update():
+    os.system("poetry update")
+
+
+def modify_pyproject_toml():
+    with open(os.path.join(PROJECT_DIRECTORY, 'pyproject.toml'), 'r') as f:
+        content = f.read()
+
+    content = content.replace('authors = []', 'authors = ["{} <{}>"]'.format(username, email))
+
+    with open('pyproject.toml', 'w') as f:
+        f.write(content)
+
+
+def init_repo():
+    subprocess.run(["poetry", "install", "-n"])
+    subprocess.run(["poetry", "update"])
+    subprocess.run(["poetry", "run", "pre-commit", "install"])
+    subprocess.run(["poetry", "run", "pre-commit", "run", "-a"])
+
 
 if __name__ == '__main__':
-    if "{{ cookiecutter.open_source_license }}" != "Proprietary":
+    if "{{ cookiecutter.open_source_license }}" != "Proprietary(Not Open Source)":
         write_license_file("{{ cookiecutter.open_source_license }}")
 
-    init_git_repo()
-    init_poetry()
+    modify_pyproject_toml()
+
+    # init_repo()

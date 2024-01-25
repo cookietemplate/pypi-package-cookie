@@ -1,28 +1,25 @@
 import nox
 
 DEFAULT_DIRS = ["src", "tests"]
-COVERAGE_THRESHOLD = None
 
 
 @nox.session(tags=["test"])
 def test(session):
     """Run the test suite."""
-    session.install(".", "pytest")
+    session.install(".", "pytest", "pytest-mock")
     session.run("pytest")
 
 
 @nox.session(reuse_venv=True, tags=["coverage"])
 def coverage(session):
     """Run the coverage report."""
-    coverage_threshold = COVERAGE_THRESHOLD or 0
     session.install(".", "pytest", "pytest-cov")
     session.run(
         "pytest",
         *[f"--cov={dir}" for dir in DEFAULT_DIRS],
         "--cov-report=term-missing",
         "--cov-report=xml",
-        "--cov-branch",
-        f"--cov-fail-under={coverage_threshold}",
+        "--cov-branch"
     )
 
 
@@ -107,7 +104,6 @@ def style(session):
     """Run the style checkers."""
     session.run("nox", "-t", "fmt", external=True)
     session.run("nox", "-t", "lint", external=True)
-    session.run("nox", "-t", "typing", external=True)
 
 
 @nox.session(python=False, tags=["prepare"])
