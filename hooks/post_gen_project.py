@@ -28,8 +28,10 @@ LICENSES_DICT = {
 
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
-username = '{{ cookiecutter.author_name }}' if '{{ cookiecutter.author_name }}' else os.popen('git config user.name').read().strip()
-email = '{{ cookiecutter.author_email }}' if '{{ cookiecutter.author_email }}' else os.popen('git config user.email').read().strip()
+# username = '{{ cookiecutter.author_name }}' if '{{ cookiecutter.author_name }}' else os.popen('git config user.name').read().strip()
+# email = '{{ cookiecutter.author_email }}' if '{{ cookiecutter.author_email }}' else os.popen('git config user.email').read().strip()
+username = "yourname"
+email = "your@email.com"
 
 
 def download_license_from_github(license_name):
