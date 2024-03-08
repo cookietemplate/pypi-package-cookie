@@ -7,7 +7,7 @@ This is a template for a Python package that can be uploaded to PYPI.
 To use this template, run the following command:
 
 ```bash
-cookiecutter gh:cookietemplate/pypi-package.git
+cookiecutter gh:cookietemplate/pypi-package
 ```
 
 ## Parameters
